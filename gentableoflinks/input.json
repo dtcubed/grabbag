@@ -1,0 +1,30 @@
+{
+    "h3_text": "Just Some Links H3",
+    
+    "links_per_row": 2,
+    
+    "title": "Just Some Links TITLE",
+
+    "link": [
+        {
+            "href": "http://www.usatoday.com",
+            "label": "USA Today"
+        },
+        {
+            "href": "http://www.cnn.com",
+            "label": "CNN"
+        },
+        {
+            "href": "http://www.startribune.com",
+            "label": "StarTribune"
+        },
+        {
+            "href": "http://www.drudgereport.com",
+            "label": "DrudgeReport"
+        },
+        {
+            "href": "http://www.foxnews.com",
+            "label": "Fox"
+        }        
+    ]
+}
