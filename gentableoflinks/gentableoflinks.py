@@ -4,11 +4,10 @@
 #############################################################################
 import json
 
-from decimal import *
 from sys import argv
 from time import sleep, time
 
-debug_messages = True 
+debug_messages = False 
 
 #####
 # Open the JSON config file passed in as the 1st argument. Read the contents into
@@ -25,7 +24,12 @@ with open(argv[1]) as config_file:
 
 h3_text = config['h3_text']
 links_per_row = config['links_per_row']
-link_list = config['link']
+#####
+# Given the structure of the link information, the default Python sort seems to 
+# work out fine for our purposes here. It sorts the list (ascending) according 
+# to the collating sequence of the information stored in the "label".
+#####
+link_list = sorted(config['link'])
 title = config['title']
 
 #####
