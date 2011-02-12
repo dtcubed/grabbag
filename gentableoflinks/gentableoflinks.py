@@ -12,6 +12,8 @@ def print_html_tag_start(file_desc, text):
 
 def main():
     debug_messages = False 
+    debug_dtcubed = True
+
     #####
     # Open the JSON config file passed in as the 1st argument and read the contents
     # into a Python dictionary object named "config".
@@ -40,32 +42,57 @@ def main():
     # Determine the number of links by the length of the list.
     #####
     number_of_links = len(link_list)
+
+    number_of_rows = number_of_links / links_per_row
+    
+    if (number_of_links % links_per_row) != 0:
+        number_of_rows += 1
+        
+    if debug_dtcubed:
+        print "Total Number of Links:", number_of_links
+        print "Links per row:", links_per_row
+        print "Number of rows:", number_of_rows 
     
     #####
     # Print out the input value.
     #####
-    print "---------------------------------------------------------------"
-    print "------------------ Input via JSON File ------------------------"
-    print "---------------------------------------------------------------"
-    print "H3 Text:", h3_text
-    print "Links per row:", links_per_row
-    print "Title:", title
-    print "Total Number of Links:", number_of_links
-    
-    link_index = 0
-    while link_index < number_of_links:
-        print "Link: [", link_index, "] Label: [", link_list[link_index]['label'], "] Href: [", link_list[link_index]['href'], "]"
-        link_index += 1
-    
-    print "---------------------------------------------------------------"
-    print "---------------------------------------------------------------"
-    print "---------------------------------------------------------------"
+    if debug_messages:
+        print "---------------------------------------------------------------"
+        print "------------------ Input via JSON File ------------------------"
+        print "---------------------------------------------------------------"
+        print "H3 Text:", h3_text
+        print "Links per row:", links_per_row
+        print "Title:", title
+        print "Total Number of Links:", number_of_links
+        
+        link_index = 0
+        while link_index < number_of_links:
+            print "Link: [", link_index, "] Label: [", link_list[link_index]['label'], "] Href: [", link_list[link_index]['href'], "]"
+            link_index += 1
+        
+        print "---------------------------------------------------------------"
+        print "---------------------------------------------------------------"
+        print "---------------------------------------------------------------"
 
     #####
     # Take care of the output file here (for now).
     #####
     output_file = file('index.html', 'w')
     output_file.write("<html>\n")
+    output_file.write("<head>\n")
+    output_file.write("%s%s%s" % ("<title>\n", title, "\n</title>\n"))
+    output_file.write("</head>\n")
+    output_file.write("<body>\n")
+    output_file.write("%s%s%s" % ("<h3>\n", h3_text, "\n</h3>\n"))
+    output_file.write("<table border=\"1\">\n")
+    row_counter = 0
+    while row_counter < number_of_rows:
+        link_counter = 0
+        while link_counter < links_per_row:
+            link_counter += 1
+        row_counter += 1
+
+    output_file.write("</body>\n")
     output_file.write("</html>\n")
     output_file.close()
 
