@@ -7,9 +7,6 @@ import json
 from sys import argv
 from time import sleep, time
 
-def print_html_tag_start(file_desc, text):
-    file_desc.write(text)
-
 def main():
     debug_messages = False 
     debug_dtcubed = True
@@ -86,12 +83,18 @@ def main():
     output_file.write("%s%s%s" % ("<h3>\n", h3_text, "\n</h3>\n"))
     output_file.write("<table border=\"1\">\n")
     row_counter = 0
+    total_link_counter = 0 
     while row_counter < number_of_rows:
+        output_file.write("<tr>\n")
         link_counter = 0
-        while link_counter < links_per_row:
+        while link_counter < links_per_row and total_link_counter < number_of_links:
+            output_file.write("%s\"%s\">" % ("<td><a href=", link_list[total_link_counter]['href']))
+            output_file.write("%s%s" % (link_list[total_link_counter]['label'], "</a></td>\n"))
             link_counter += 1
+            total_link_counter += 1
+        output_file.write("</tr>\n")
         row_counter += 1
-
+    output_file.write("</table>\n")
     output_file.write("</body>\n")
     output_file.write("</html>\n")
     output_file.close()
