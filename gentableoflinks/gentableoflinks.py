@@ -3,14 +3,11 @@
 ####################### SOF #################################################
 #############################################################################
 import json
+import os
 
-from sys import argv
-from time import sleep, time
+from sys import argv, exit
 
 def main():
-    debug_messages = False 
-    debug_dtcubed = True
-
     #####
     # Open the JSON config file passed in as the 1st argument and read the contents
     # into a Python dictionary object named "config".
@@ -18,21 +15,26 @@ def main():
     config_file = file(argv[1], 'r')
     config = json.load(config_file)
     config_file.close()
-    if debug_messages:
-        print config['h3_text']
-        print config['links_per_row']
-        print config['title']
-        print config['link'][0]['href']
-        print config['link'][0]['label']
-    
-    h3_text = config['h3_text']
-    links_per_row = config['links_per_row']
+
+    #####
+    # Ensure that the output file passed in as the 2nd argument does not already exist. 
+    # If it does, exit because we will not overwrite files in this script.
+    #####
+    output_file_name = argv[2]
+    if os.path.exists(output_file_name):
+        print "\nOutput file: [", output_file_name, "] exists and we do not overwrite. Exiting.\n" 
+        exit()
+
     #####
     # Given the structure of the link information, the default Python sort seems to 
     # work out fine for our purposes here. It sorts the list (ascending) according 
-    # to the collating sequence of the information stored in the "label".
+    # to the collating sequence of the information stored in "a_label". 
+    #
+    # Also, pull the other stuff we need from the config dictionary object too.
     #####
     link_list = sorted(config['link'])
+    h3_text = config['h3_text']
+    links_per_row = config['links_per_row']
     title = config['title']
     
     #####
@@ -40,41 +42,19 @@ def main():
     #####
     number_of_links = len(link_list)
 
+    #####
+    # Determine the number of rows our table with have. Account for partial rows too. 
+    #####
     number_of_rows = number_of_links / links_per_row
     
     if (number_of_links % links_per_row) != 0:
         number_of_rows += 1
         
-    if debug_dtcubed:
-        print "Total Number of Links:", number_of_links
-        print "Links per row:", links_per_row
-        print "Number of rows:", number_of_rows 
-    
     #####
-    # Print out the input value.
+    # Now, take care of the output file. We already checked that we are not overwriting
+    # things earlier in the script.
     #####
-    if debug_messages:
-        print "---------------------------------------------------------------"
-        print "------------------ Input via JSON File ------------------------"
-        print "---------------------------------------------------------------"
-        print "H3 Text:", h3_text
-        print "Links per row:", links_per_row
-        print "Title:", title
-        print "Total Number of Links:", number_of_links
-        
-        link_index = 0
-        while link_index < number_of_links:
-            print "Link: [", link_index, "] Label: [", link_list[link_index]['label'], "] Href: [", link_list[link_index]['href'], "]"
-            link_index += 1
-        
-        print "---------------------------------------------------------------"
-        print "---------------------------------------------------------------"
-        print "---------------------------------------------------------------"
-
-    #####
-    # Take care of the output file here (for now).
-    #####
-    output_file = file('index.html', 'w')
+    output_file = file(output_file_name, 'w')
     output_file.write("<html>\n")
     output_file.write("<head>\n")
     output_file.write("%s%s%s" % ("<title>\n", title, "\n</title>\n"))
@@ -89,7 +69,7 @@ def main():
         link_counter = 0
         while link_counter < links_per_row and total_link_counter < number_of_links:
             output_file.write("%s\"%s\">" % ("<td><a href=", link_list[total_link_counter]['href']))
-            output_file.write("%s%s" % (link_list[total_link_counter]['label'], "</a></td>\n"))
+            output_file.write("%s%s" % (link_list[total_link_counter]['a_label'], "</a></td>\n"))
             link_counter += 1
             total_link_counter += 1
         output_file.write("</tr>\n")

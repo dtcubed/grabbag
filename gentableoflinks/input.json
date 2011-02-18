@@ -7,24 +7,24 @@
 
     "link": [
         {
-            "href": "http://www.usatoday.com",
-            "label": "USA Today"
+            "a_label": "USA Today",
+            "href": "http://www.usatoday.com"
         },
         {
-            "href": "http://www.cnn.com",
-            "label": "CNN"
+            "a_label": "CNN",
+            "href": "http://www.cnn.com"
         },
         {
-            "href": "http://www.startribune.com",
-            "label": "StarTribune"
+            "a_label": "StarTribune",
+            "href": "http://www.startribune.com"
         },
         {
-            "href": "http://www.drudgereport.com",
-            "label": "DrudgeReport"
+            "a_label": "DrudgeReport",
+            "href": "http://www.drudgereport.com"
         },
         {
-            "href": "http://www.foxnews.com",
-            "label": "Fox"
+            "a_label": "Fox",
+            "href": "http://www.foxnews.com"
         }        
     ]
 }

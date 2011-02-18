@@ -1,2 +1,3 @@
 cls
-python gentableoflinks.py input.json
+del index.html
+python gentableoflinks.py input.json index.html
