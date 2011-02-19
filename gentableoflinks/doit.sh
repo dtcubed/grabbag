@@ -1,7 +1,6 @@
 #!/bin/bash
 
 clear
-python gentableoflinks.py input.json
-
-
+rm -f ./index.html
+python gentableoflinks.py input.json index.html
 
