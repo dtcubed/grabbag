@@ -38,11 +38,11 @@ def main():
 
     #####
     # Ensure that the output file passed in as the 2nd argument does not already exist. 
-    # If it does, exit because we will not overwrite files in this script.
+    # If it does exist, exit because we will not overwrite files in this script.
     #####
     output_file_name = argv[2]
     if os.path.exists(output_file_name):
-        print "\nOutput file: [", output_file_name, "] exists and we do not overwrite. Exiting.\n" 
+        print "\nOutput file: [", output_file_name, "] exists and we will not overwrite. Exiting.\n" 
         exit()
 
     #####
@@ -63,7 +63,7 @@ def main():
     number_of_links = len(link_list)
 
     #####
-    # Determine the number of rows our table with have. Account for partial rows too. 
+    # Determine the number of rows our table will have. Account for partial rows too. 
     #####
     number_of_rows = number_of_links / links_per_row
     
@@ -72,7 +72,7 @@ def main():
         
     #####
     # Now, take care of the output file. We already checked that we are not overwriting
-    # things earlier in the script.
+    # anything earlier in the script.
     #####
     output_file = file(output_file_name, 'w')
     output_file.write("<html>\n")
