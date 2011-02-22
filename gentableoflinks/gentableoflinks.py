@@ -46,9 +46,7 @@ def main():
         exit()
 
     #####
-    # Given the structure of the link information, the default Python sort seems to 
-    # work out fine for our purposes here. It sorts the list (ascending) according 
-    # to the collating sequence of the information stored in "a_label". 
+    # Given the structure of the link information, the default Python sort works out fine.
     #
     # Also, pull the other stuff we need from the config dictionary object too.
     #####
@@ -88,8 +86,13 @@ def main():
         output_file.write("<tr>\n")
         link_counter = 0
         while link_counter < links_per_row and total_link_counter < number_of_links:
-            output_file.write("%s\"%s\">" % ("<td><a href=", link_list[total_link_counter]['href']))
-            output_file.write("%s%s" % (link_list[total_link_counter]['a_label'], "</a></td>\n"))
+            #####
+            # Split on the pipe symbol. We don't do any trimming of front or back
+            # whitespace because we assume our input doesn't have any issues there.
+            #####
+            component = link_list[total_link_counter].split('|')
+            output_file.write("%s\"%s\">" % ("<td><a href=", component[1]))
+            output_file.write("%s%s" % (component[0], "</a></td>\n"))
             link_counter += 1
             total_link_counter += 1
         output_file.write("</tr>\n")
