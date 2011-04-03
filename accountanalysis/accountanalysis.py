@@ -59,9 +59,11 @@ def calc_future_value(present_value, asir, start_datestamp, end_datestamp, debug
     end_datetime = datetime.date(est.tm_year, est.tm_mon, est.tm_mday)
     time_delta = end_datetime - start_datetime
 
-    if debugging:
+    if (time_delta.days < 1):
         print "End Datestamp: [", end_datestamp, "] Start Datestamp:[", start_datestamp, "]"
         print "Difference In Days: [", time_delta.days, "]"
+        raise Exception('End Datetime Not After Start Datetime')
+
 
 #############################################################################
 def main():
@@ -80,8 +82,8 @@ def main():
     # Each row is really a list of strings as parsed by the csv reader.
     #####
     for transaction in transactionReader:
-        #calc_future_value(transaction[1], 0.04, transaction[0], '20110402', debugging=True)
-        calc_future_value(transaction[1], 0.04, transaction[0], '198diff = datetime.date(year1, month1, day1) - datetime.date(year2, month2, day2)00402', debugging=True)
+        calc_future_value(transaction[1], 0.04, transaction[0], '20110402', debugging=True)
+        #calc_future_value(transaction[1], 0.04, transaction[0], '19800402', debugging=True)
 
 #############################################################################
 if __name__ == '__main__':
